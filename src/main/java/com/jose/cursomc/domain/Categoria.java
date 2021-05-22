@@ -22,6 +22,11 @@ public class Categoria implements Serializable {
 	
 	private String nome;
 	
+	// Esse ocorreu pois não tinha um construtor vazio public Categoria() {} No default constructor for entity: :
+	
+	public Categoria() {
+	}
+
 	public Categoria(Integer id, String nome) {
 		super();
 		this.id = id;
