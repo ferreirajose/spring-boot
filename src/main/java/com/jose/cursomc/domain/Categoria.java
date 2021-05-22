@@ -2,9 +2,12 @@ package com.jose.cursomc.domain;
 
 import java.io.Serializable;
 
-// MAGALU200
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-
+@Entity
 public class Categoria implements Serializable {
 	/**  
 	 * Serializable = diz que a class pode ser convertida para uma sequencia de bytes, que ela pode trafegar pela rede HTTP: ex: em formato JSON, que os objetos
@@ -13,7 +16,10 @@ public class Categoria implements Serializable {
 
 	private static final long serialVersionUID = 1L; // todo a class que implementa Serializable, deve informa a versão da class que 1L = a primeira versão
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
 	private String nome;
 	
 	public Categoria(Integer id, String nome) {
