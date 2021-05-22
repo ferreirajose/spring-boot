@@ -2,11 +2,15 @@ package com.jose.cursomc.domain;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import javax.persistence.ManyToMany;
 @Entity
 public class Categoria implements Serializable {
 	/**  
@@ -21,6 +25,14 @@ public class Categoria implements Serializable {
 	private Integer id;
 	
 	private String nome;
+
+	/** 
+	 * o mesmo mapeamento que foi feito em produto, esta sendo feito em categoria
+	 * a propriedade mappedBy, "meio que espelha o trabalho feito em produto"
+	*/
+
+	@ManyToMany(mappedBy="categorias")
+	private List<Produto> produtos = new ArrayList<>();
 	
 	// Esse ocorreu pois não tinha um construtor vazio public Categoria() {} No default constructor for entity: :
 	
@@ -47,6 +59,14 @@ public class Categoria implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
 	}
 
 	@Override
