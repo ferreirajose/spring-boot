@@ -1,4 +1,4 @@
-package com.jose.cursomc.service;
+package com.jose.cursomc.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import com.jose.cursomc.domain.Categoria;
 import com.jose.cursomc.repositories.CategoriaRepository;
+import com.jose.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -27,8 +28,14 @@ public class CategoriaService {
          *  }
          * Optional foi add para resolver o problema null point exception, pois caso não tenha valor o retorno sera NULL
         */
+        // Optional<Categoria> obj = repo.findById(id); 
+        // return obj.orElse(null); // caso não econtre o valor informado retorna NULL
+
         Optional<Categoria> obj = repo.findById(id); 
-        return obj.orElse(null); // caso não econtre o valor informado retorna NULL
+
+        return obj.orElseThrow(() -> new ObjectNotFoundException(
+                                "Objeto não encontrado com Id: " + id + ", Tipo: " + Categoria.class.getName()));
+        
     }
 
 }

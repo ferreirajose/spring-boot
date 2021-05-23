@@ -1,12 +1,8 @@
 package com.jose.cursomc.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.jose.cursomc.domain.Categoria;
-import com.jose.cursomc.service.CategoriaService;
+import com.jose.cursomc.services.CategoriaService;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

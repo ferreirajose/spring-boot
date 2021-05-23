@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 public class Categoria implements Serializable {
 	/**  
@@ -29,8 +31,12 @@ public class Categoria implements Serializable {
 	/** 
 	 * o mesmo mapeamento que foi feito em produto, esta sendo feito em categoria
 	 * a propriedade mappedBy, "meio que espelha o trabalho feito em produto"
+	 * 
+	 * @JsonManagedReference junto com @JsonBackReference server para evitar o problema de referencia circula entr
+     * categoria e produtos, evitando que gere um json onde gerar um encadeamento sem fim de categorias e produto
 	*/
 
+	@JsonManagedReference
 	@ManyToMany(mappedBy="categorias")
 	private List<Produto> produtos = new ArrayList<>();
 	
