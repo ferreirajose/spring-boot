@@ -32,7 +32,7 @@ public class PedidoResource {
 	 * any no typescrip
 	 * */ 
 	
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Pedido> find(@PathVariable Integer id) {
 		
 		Pedido ped = service.buscar(id);
 

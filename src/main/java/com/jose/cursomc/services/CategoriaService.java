@@ -1,12 +1,14 @@
 package com.jose.cursomc.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 import com.jose.cursomc.domain.Categoria;
 import com.jose.cursomc.repositories.CategoriaRepository;
+import com.jose.cursomc.services.exceptions.DataIntegrityException;
 import com.jose.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -18,7 +20,7 @@ public class CategoriaService {
     @Autowired
     private CategoriaRepository repo;
 
-    public Categoria buscar(Integer id) {
+    public Categoria find(Integer id) {
 
         /** 
          * Optional foi add na versão 8 do JAVA, Antes era
@@ -44,4 +46,17 @@ public class CategoriaService {
         return repo.save(obj);
     }
 
+    public Categoria update(Categoria obj) {
+        find(obj.getId());  // verificar se o id informa existe
+        return repo.save(obj);
+    }
+
+    public void remove(Integer id) {
+        try {
+            find(id); // verificar se o id informa existe
+            repo.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityException("Não é possivel excluir uma categoria que possue produtos");   
+        }
+    }
 }
