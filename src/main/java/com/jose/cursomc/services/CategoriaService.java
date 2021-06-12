@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.jose.cursomc.domain.Categoria;
+import com.jose.cursomc.dto.CategoriaDTO;
 import com.jose.cursomc.repositories.CategoriaRepository;
 import com.jose.cursomc.services.exceptions.DataIntegrityException;
 import com.jose.cursomc.services.exceptions.ObjectNotFoundException;
@@ -75,6 +75,11 @@ public class CategoriaService {
         PageRequest pageRequest = PageRequest.of(page, itensPerPage, Direction.valueOf(direction), orderBy);
 
         return repo.findAll(pageRequest);
+    }
+
+    // metodo auxiliar para que recebe um CategoriaDTO e retorna uma instancia de Categoria
+    public Categoria fromDTO(CategoriaDTO objDto) {
+        return new Categoria(objDto.getId(), objDto.getNome());
     }
     
 }
