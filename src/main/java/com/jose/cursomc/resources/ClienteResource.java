@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import com.jose.cursomc.domain.Cliente;
 import com.jose.cursomc.dto.ClienteDTO;
+import com.jose.cursomc.dto.ClienteNewDto;
 import com.jose.cursomc.services.ClienteService;
 
 
@@ -82,7 +83,7 @@ public class ClienteResource {
 	}
 
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO objDto) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDto objDto) {
 		Cliente obj = service.fromDTO(objDto);
 
 		obj = service.insert(obj);
@@ -91,6 +92,7 @@ public class ClienteResource {
 
 		return ResponseEntity.created(uri).build();
 	}
+	
 
 	/**
 	* esse MissingServletRequestParameterException aconteceu pois tinha RequestParam e RequestBody, já que é put a informação vem no body
