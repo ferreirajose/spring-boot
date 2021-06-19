@@ -57,13 +57,15 @@ public class CategoriaService {
     }
 
     public Categoria update(Categoria obj) {
-        find(obj.getId());  // verificar se o id informa existe
-        return repo.save(obj);
+        Categoria newObj = find(obj.getId());  // verificar se o id informa existe
+        updateDate(newObj, obj);
+
+        return repo.save(newObj);
     }
 
     public void remove(Integer id) {
         try {
-            find(id); // verificar se o id informa existe
+            find(id); // verificar se o id informado existe
             repo.deleteById(id);
         } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityException("Não é possivel excluir uma categoria que possue produtos");   
@@ -82,4 +84,16 @@ public class CategoriaService {
         return new Categoria(objDto.getId(), objDto.getNome());
     }
     
+    /**
+     * 
+     * @param newObj
+     * @param obj
+     * 
+     * metodo auxiliar que salvar um objeto do tipo Categoria, no fromDTO() do CategoriaResource, passamos um obj 
+     * do tipo CategoriaDTO e retornamos um Categoria() sendo que os paramtros cpf e tipoClintes passamos null, 
+     * esse metodo ira atualizar apenas o nome e email sem alterar o cpf e tipoClintes atuais
+    */
+    private void updateDate(Categoria newObj, Categoria obj) {
+        newObj.setNome(obj.getNome());
+    }
 }
