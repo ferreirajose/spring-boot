@@ -1,6 +1,5 @@
 package com.jose.cursomc.resources;
 
-import java.net.URI;
 import java.util.List;
 
 import com.jose.cursomc.domain.Produto;

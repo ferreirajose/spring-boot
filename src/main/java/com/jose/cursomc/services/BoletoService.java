@@ -1,0 +1,20 @@
+package com.jose.cursomc.services;
+
+import java.util.Calendar;
+import java.util.Date;
+
+import com.jose.cursomc.domain.PagamentoComBoleto;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class BoletoService {    
+
+    public void preencherPagamamentoComBoleto(PagamentoComBoleto pagto, Date instanteDoPedido) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(instanteDoPedido);
+        cal.add(Calendar.DAY_OF_MONTH, 7);
+        pagto.setDataVencimento(cal.getTime());
+    }
+    
+}

@@ -2,10 +2,17 @@ package com.jose.cursomc.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.Optional;
 
+import com.jose.cursomc.domain.ItemPedido;
+import com.jose.cursomc.domain.PagamentoComBoleto;
 import com.jose.cursomc.domain.Pedido;
+import com.jose.cursomc.domain.enums.EstadoPagamento;
+import com.jose.cursomc.repositories.ItemPedidoRepository;
+import com.jose.cursomc.repositories.PagamentoRepository;
 import com.jose.cursomc.repositories.PedidoRepository;
 import com.jose.cursomc.services.exceptions.ObjectNotFoundException;
 
@@ -17,6 +24,19 @@ public class PedidoService {
      * */ 
     @Autowired
     private PedidoRepository repo;
+
+    @Autowired
+    private BoletoService boletoService;
+
+    @Autowired
+    private PagamentoRepository pagamentoRepository;
+
+    @Autowired
+    private ProdutoService produtoService;
+
+    @Autowired
+    private ItemPedidoRepository itemPedidoRepository;
+
 
     public Pedido buscar(Integer id) {
 
@@ -36,6 +56,31 @@ public class PedidoService {
         return obj.orElseThrow(() -> new ObjectNotFoundException(
                                 "Objeto não encontrado com Id: " + id + ", Tipo: " + Pedido.class.getName()));
         
+    }
+
+    @Transactional
+    public Pedido insert(Pedido obj) {
+        obj.setId(null);
+        obj.setInstante(new Date());
+        obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
+        obj.getPagamento().setPedido(obj);
+        
+        if (obj.getPagamento() instanceof PagamentoComBoleto ) {
+            PagamentoComBoleto pagto = (PagamentoComBoleto) obj.getPagamento();
+            boletoService.preencherPagamamentoComBoleto(pagto, obj.getInstante());
+        }
+
+        obj = repo.save(obj);
+        pagamentoRepository.save(obj.getPagamento());
+
+        for (ItemPedido ip : obj.getItens()) {
+            ip.setDesconto(0.0);
+            ip.setPreco(produtoService.buscar(ip.getProduto().getId()).getPreco());
+            ip.setPedido(obj);
+        }
+
+        itemPedidoRepository.saveAll(obj.getItens());
+        return obj;
     }
 
 }
