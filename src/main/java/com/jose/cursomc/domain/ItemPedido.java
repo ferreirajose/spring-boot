@@ -33,6 +33,10 @@ public class ItemPedido implements Serializable {
         this.preco = preco;
     }
 
+    public double getSubTotal() {
+        return (preco - desconto) * quantidade;
+    }
+
     /** 
      * Esses 2 metodos getPedido e getProduto sera utiliza para ter acesso direto ao Pedido e Produto
      * fora da class ItemPedido
