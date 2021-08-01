@@ -3,6 +3,8 @@ package com.jose.cursomc.config;
 import java.text.ParseException;
 
 import com.jose.cursomc.services.DBService;
+import com.jose.cursomc.services.EmailService;
+import com.jose.cursomc.services.SmtpEmailService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,5 +33,9 @@ public class DevConfig {
 
         dbService.instantiateTestDatabase();
         return true;
+    }
+
+    @Bean EmailService emailService() {
+        return new SmtpEmailService();
     }
 }

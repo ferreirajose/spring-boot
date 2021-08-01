@@ -135,7 +135,7 @@ public class DBService {
 
         /****************************************************/
 
-        Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "09487329448", TipoCliente.PF);
+        Cliente cli1 = new Cliente(null, "Maria Silva", "ferreirajosejp@gmail.com", "09487329448", TipoCliente.PF);
         cli1.getTelefones().addAll(Arrays.asList("83993820492", "11993940292"));
 
         Endereco end1 = new Endereco(null, "Ruas Flores", "300", "Apto 303", "Jardim", "38220834", cli1, cid1);
