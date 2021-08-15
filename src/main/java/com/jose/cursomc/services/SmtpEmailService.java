@@ -2,6 +2,8 @@ package com.jose.cursomc.services;
 
 import javax.mail.internet.MimeMessage;
 
+import com.jose.cursomc.domain.Pedido;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,12 @@ public class SmtpEmailService extends AbstractEmailService {
         LOG.info("ENVIANDO DE E-MAIL...");
         javaMailSender.send(msg);
         LOG.info("E-MAIL ENVIADO");
+    }
+
+    @Override
+    public void sendOrderConfirmationHtmlEmail(Pedido obj) {
+        // TODO Auto-generated method stub
+        
     }
 
 }
