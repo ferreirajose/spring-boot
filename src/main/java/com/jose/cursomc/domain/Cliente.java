@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.print.DocFlavor.STRING;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jose.cursomc.domain.enums.TipoCliente;
@@ -34,6 +35,9 @@ public class Cliente implements Serializable {
     private String cpfCnpj;
     private Integer tipoCliente;
 
+    @JsonIgnore
+    private String senha;
+
 
     /// cascade ALL, permitindo remover um cliente que não possue pedidos
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
@@ -51,13 +55,14 @@ public class Cliente implements Serializable {
 
     }
 
-    public Cliente(Integer id, String nome, String email, String cpfCnpj, TipoCliente tipoCliente) {
+    public Cliente(Integer id, String nome, String email, String cpfCnpj, TipoCliente tipoCliente, String senha) {
         super();
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.cpfCnpj = cpfCnpj;
         this.tipoCliente = (tipoCliente == null) ? null : tipoCliente.getCode();
+        this.senha = senha;
     }
 
     public Integer getId() {
@@ -98,6 +103,14 @@ public class Cliente implements Serializable {
 
     public void setTipoCliente(TipoCliente tipoCliente) {
         this.tipoCliente = tipoCliente.getCode();
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public List<Endereco> getEnderecos() {

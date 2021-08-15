@@ -28,10 +28,14 @@ import com.jose.cursomc.repositories.PedidoRepository;
 import com.jose.cursomc.repositories.ProdutoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DBService {
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     private CategoriaRepository categoriaRepository;
@@ -135,7 +139,7 @@ public class DBService {
 
         /****************************************************/
 
-        Cliente cli1 = new Cliente(null, "Maria Silva", "ferreirajosejp@gmail.com", "09487329448", TipoCliente.PF);
+        Cliente cli1 = new Cliente(null, "Maria Silva", "ferreirajosejp@gmail.com", "09487329448", TipoCliente.PF, bCryptPasswordEncoder.encode("1234"));
         cli1.getTelefones().addAll(Arrays.asList("83993820492", "11993940292"));
 
         Endereco end1 = new Endereco(null, "Ruas Flores", "300", "Apto 303", "Jardim", "38220834", cli1, cid1);
